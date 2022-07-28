@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Miromax Test">
+    <test verbose="2" preserve-order="true" name="src/test">
+        <classes>
+            <class name="miromax.test.MiromaxCinemaTest">
+            </class>
+        </classes>
+    </test>
+</suite>

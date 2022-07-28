@@ -1,4 +1,4 @@
-package film.miromax;
+package WebDriverConfig;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -6,7 +6,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
-import java.time.Duration;
 import java.util.HashMap;
 
 
@@ -14,7 +13,8 @@ public class WebDriverConfig {
     public ChromeDriver driver;
 
     @BeforeTest
-    public void setDriver() {
+    public void setDriver() throws InterruptedException {
+
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         HashMap<String, Integer> cameraSetting = new HashMap<>();
@@ -31,7 +31,6 @@ public class WebDriverConfig {
 //      options.addArguments("use-fake-ui-for-media-stream");
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1800));
 
     }
 

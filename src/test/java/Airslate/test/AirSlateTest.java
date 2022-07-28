@@ -1,21 +1,23 @@
-package film.miromax.test;
+package Airslate.test;
 
-import film.miromax.WebDriverConfig;
+import WebDriverConfig.WebDriverConfig;
+import pages.airSlate.AirSlatePage;
 import org.testng.annotations.Test;
 
 public class AirSlateTest extends WebDriverConfig {
-    String pbLink1 = "https://arsl.at/VmKWLkym";
-    String loginPageUrl = "https://my.airslate.com/login";
-    String pbLinkSign = "https://arsl.at/ElPJ3ajm";
+    final String PB_LINK_1 = "https://arsl.at/VmKWLkym";
+    final String LOGIN_URL = "https://my.airslate.com/login";
+    final String PB_LINK_SIGN = "https://arsl.at/ElPJ3ajm";
 
-    @Test(priority = 0)
-    public void FirstTest() {
-        driver.get(pbLink1);
+
+    @Test
+    public void fillInSingleLinesTest() {
+        driver.get(PB_LINK_1);
         AirSlatePage page = new AirSlatePage(driver);
         page.consentButtonClick();
         page.switchToiFrame();
         page.fillInFirstSingleLine();
-        page.fillInValidField();
+        page.fillValidData();
         page.switchBackIFrame();
         page.completeButtonClick();
         page.waitForThankYouPage();
@@ -23,8 +25,8 @@ public class AirSlateTest extends WebDriverConfig {
     }
 
     @Test(priority = 1)
-    public void SecondTest() {
-        driver.get(pbLink1);
+    public void linkOpensInNewTabTest() {
+        driver.get(PB_LINK_1);
         AirSlatePage page = new AirSlatePage(driver);
         page.consentButtonClick();
         page.switchToiFrame();
@@ -40,8 +42,8 @@ public class AirSlateTest extends WebDriverConfig {
     }
 
     @Test(priority = 4)
-    public void ThirdTest() {
-        driver.get(pbLink1);
+    public void validationMessageTest() {
+        driver.get(PB_LINK_1);
         AirSlatePage page = new AirSlatePage(driver);
         page.consentButtonClick();
         page.switchToiFrame();
@@ -53,8 +55,8 @@ public class AirSlateTest extends WebDriverConfig {
     }
 
     @Test(priority = 2)
-    public void FourthTest() {
-        driver.get(pbLinkSign);
+    public void signDocViaCameraTest() {
+        driver.get(PB_LINK_SIGN);
         AirSlatePage page = new AirSlatePage(driver);
         page.consentButtonClick();
         page.switchToiFrame();
@@ -64,14 +66,16 @@ public class AirSlateTest extends WebDriverConfig {
         page.completeButtonClick();
         page.waitForThankYouPage();
         page.checkWeOnTryAirSlatePage();
+        driver.manage().deleteAllCookies();
+        driver.get(driver.getCurrentUrl());
     }
 
     @Test(priority = 3)
-    public void AddProfileImage() {
-        driver.get(loginPageUrl);
+    public void changeProfileImageTest() {
+        driver.get(LOGIN_URL);
         AirSlatePage page = new AirSlatePage(driver);
         page.loginUser();
-        page.navigateToProfilePage();
+        page.openProfilePage();
         page.changeAvatar();
         driver.manage().deleteAllCookies();
         driver.get(driver.getCurrentUrl());
