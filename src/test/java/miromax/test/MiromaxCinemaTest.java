@@ -2,54 +2,56 @@ package miromax.test;
 
 import WebDriverConfig.WebDriverConfig;
 import org.testng.annotations.BeforeTest;
-import pages.Miromax.Locators;
+import pages.Miromax.CinemaHallPage;
 import pages.Miromax.MainPage;
 import org.testng.annotations.Test;
+import pages.Miromax.MovieDetailPage;
 
 import java.text.ParseException;
 
 public class MiromaxCinemaTest extends WebDriverConfig {
+    MainPage mainPage;
+    MovieDetailPage movieDetailPage;
+    CinemaHallPage cinemaHallPage;
 
     @BeforeTest
     public void openPage() {
-        driver.get(Locators.MAIN_PAGE_LINK);
-        new MainPage(driver).closeLocationSelector();
+        mainPage = new MainPage(driver);
+        movieDetailPage = new MovieDetailPage(driver);
+        cinemaHallPage = new CinemaHallPage(driver);
+        mainPage.openMainPage();
+        mainPage.closeLocationSelector();
     }
 
     @Test()
-    public void filterTest() {
-        MainPage page = new MainPage(driver);
-        driver.get(Locators.MAIN_PAGE_LINK);
-        page.clickFilterInHeader();
-        page.click2DButtonFilter();
-        page.clickAnimationButtonFilter();
-        page.clickApplyFilterButton();
-        page.checkMinionsAvailableToOrder();
-
+    public void acceptFilter() {
+        mainPage.setFilter();
+        mainPage.checkMinionsAvailableToOrder();
     }
-    @Test(dependsOnMethods = "filterTest")
-    public void selectFirstSessionTest(){
-        MainPage page = new MainPage(driver);
-        page.findMinionsMovieAndOpenDetailPage();
-        page.clickMinionsFirstSession();
-        page.checkWeOnOrderPage();
+    @Test(dependsOnMethods = "acceptFilter")
+    public void checkMinionsMovieAvailableTest(){
+        mainPage.findMinionsMovieAndOpenDetailPage();
+    }
+
+    @Test(dependsOnMethods = "checkMinionsMovieAvailableTest")
+    public void selectFirstSessionTest() {
+        movieDetailPage.clickMinionsFirstSession();
     }
 
     @Test(dependsOnMethods = "selectFirstSessionTest")
     public void getMovieInfo() throws ParseException {
-        new MainPage(driver).getMovieInfo();
+        cinemaHallPage.getMovieInfo();
     }
 
     @Test(dependsOnMethods = "getMovieInfo")
-    public void getSeatsInfoTest(){
-        new MainPage(driver).getSeatValue();
+    public void getSeatsInfoTest() {
+        cinemaHallPage.getSeatValue();
     }
 
     @Test(dependsOnMethods = "getSeatsInfoTest")
     public void testTicketBuy() {
-        MainPage page = new MainPage(driver);
-        page.chooseTwoCentralSeats(4);
-        page.checkTicketsInBasket();
-        page.deleteTicketFromBasket();
+        cinemaHallPage.chooseTwoCentralSeats(4);
+        cinemaHallPage.checkTicketsInBasket();
+        cinemaHallPage.deleteTicketFromBasket();
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Main Test Suite"  parallel="tests" thread-count="4">
+    <test name="banks">
+        <classes>
+            <class name="banks.test.BankExchangeTest">
+            </class>
+        </classes>
+    </test>
+    <test name="airSlate">
+        <classes>
+            <class name="airslate.test.AirSlateTest">
+            </class>
+        </classes>
+    </test>
+    <test name="hotline">
+        <classes>
+            <class name="hotline.test.HotlineTest">
+            </class>
+        </classes>
+    </test>
+    <test name="miromax">
+        <classes>
+            <class name="miromax.test.MiromaxCinemaTest">
+            </class>
+        </classes>
+    </test>
+</suite>

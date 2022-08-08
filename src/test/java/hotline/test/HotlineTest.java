@@ -1,47 +1,46 @@
 package hotline.test;
 
 import WebDriverConfig.WebDriverConfig;
-
-import pages.Hotline.HotlinePage;
+import pages.hotline.CategoryPage;
+import pages.hotline.DetailPage;
+import pages.hotline.MainPage;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class HotlineTest extends WebDriverConfig {
-    final String MAIN_PAGE_URL = "https://hotline.ua";
+    MainPage mainPage;
+    CategoryPage categoryPage;
+    DetailPage detailPage;
 
     @BeforeTest
-    public void testHotlinePage() {
-        driver.get(MAIN_PAGE_URL);
-        new HotlinePage(driver).closeSubscriptionRequestIfAppears();
+    public void openMainPageAndCloseSubscription() {
+        mainPage = new MainPage(driver);
+        categoryPage = new CategoryPage(driver);
+        detailPage = new DetailPage(driver);
+        mainPage.closeSubscriptionRequestIfAppears();
     }
 
     @Test
-    public void placeholderTest() {
-        new HotlinePage(driver).checkPlaceholder();
+    public void searchFieldTest() {
+        mainPage.checkPlaceholder();
+        mainPage.searchForItem();
     }
 
-    @Test(dependsOnMethods = "placeholderTest")
-    public void searchFieldTest() {
-        new HotlinePage(driver).searchForItem();
-    }
 
     @Test(dependsOnMethods = "searchFieldTest")
     public void checkForAdvertProduct() {
-        new HotlinePage(driver).checkAdProductIsShownInList();
+        categoryPage.checkAdProductIsShownInList();
     }
 
     @Test(dependsOnMethods = "checkForAdvertProduct")
-    public void filterByPriceTest() {
-        new HotlinePage(driver).filterPriceTest();
+    public void filteringTest() {
+        categoryPage.filterPriceTest();
+        categoryPage.filterByModelTest();
     }
 
-    @Test(dependsOnMethods = "filterByPriceTest")
-    public void filterByModelTest() {
-        new HotlinePage(driver).filterByModelTest();
-    }
 
-    @Test(dependsOnMethods = "filterByModelTest")
+    @Test(dependsOnMethods = "filteringTest")
     public void modelDetailPageTest() {
-        new HotlinePage(driver).getInfoForThirdProduct();
+        detailPage.getInfoForThirdProduct();
     }
 }
